@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ingress-egress-app": {
+      "hosting": {
+        "ingress-egress-app": [
+          "ingress-egress-app"
+        ]
+      }
+    }
+  }
+}
