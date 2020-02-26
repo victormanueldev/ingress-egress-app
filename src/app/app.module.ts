@@ -21,8 +21,18 @@ import { SignupComponent }        from '@app/auth/signup/signup.component';
 import { NavbarComponent }        from '@app/shared/navbar/navbar.component';
 import { FooterComponent }        from '@app/shared/footer/footer.component';
 import { StatsComponent }         from '@app/admin/stats/stats.component';
+import { AlertComponent }         from '@app/shared/alert/alert.component';
+
+// Epic Spinner
+import { HalfCircleSpinnerModule } from 'angular-epic-spinners';
+
+
+// NgRx
+import { StoreModule }            from '@ngrx/store';
+import { StoreDevtoolsModule }    from '@ngrx/store-devtools';
 import { environment }            from 'environments/environment';
-import { AlertComponent } from './shared/alert/alert.component';
+import { reducers, metaReducers } from './reducers';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +53,16 @@ import { AlertComponent } from './shared/alert/alert.component';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    HalfCircleSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,24 +1,67 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { User } from './user.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
+import { AppState } from '@app/reducers';
+import { ActivateLoadingAction, DeactivateLoadingAction } from '@app/actions/ui.actions';
+import { SetUserAuth } from '@app/actions/auth.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor( private afAuth: AngularFireAuth, private router: Router ) { 
+  subscription  : Subscription = new Subscription();
+
+  constructor( 
+    private afAuth: AngularFireAuth, 
+    private router: Router,
+    private afs   : AngularFirestore ,
+    private store : Store<AppState>
+  ) { 
     this.afAuth.authState.subscribe( (user: firebase.User) => {
       if( !user ) {
+        this.subscription.unsubscribe();
         this.router.navigate(['/auth/login']);
+      } else {
+        this.subscription = this.afs.doc(`${ user.uid }/usuario`).valueChanges()
+        .subscribe( (user: any) => {
+          const newUser = new User( user );
+          this.store.dispatch( new SetUserAuth( { user: newUser } ) );
+        });
       }
     });
   }
 
-  createUser(email: string, password: string): Promise<any> {
-    return this.afAuth.auth.createUserWithEmailAndPassword( email, password );
+  createUser(name: string, email: string, password: string): Promise<any> {
+
+    this.store.dispatch( new ActivateLoadingAction() );
+
+    return this.afAuth.auth
+      .createUserWithEmailAndPassword( email, password )
+      .then( res => {
+        
+        const user: User = {
+          uid   : res.user.uid,
+          email : res.user.email,
+          name  : name
+        }
+
+        this.afs.doc( `${ user.uid }/usuario` ).set( user )
+          .then( () => {
+            this.store.dispatch( new DeactivateLoadingAction() );
+            this.router.navigate(['/admin']);
+          })
+        
+      })
+      .catch( error => {
+        console.log(error);
+        this.store.dispatch( new DeactivateLoadingAction() );
+      })
   }
 
   login( email: string, password: string ): Promise<any> {

@@ -102,7 +102,27 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <button [disabled]="signupForm.invalid" class="btn btn-primary mt-4">Create account</button>
+                    <div class="col-12" [hidden]="!isLoading">
+                      <button [disabled]="true" class="btn btn-primary my-4">
+                        <div class="row">
+                          <div class="col-8">
+                            <span>Creating User...</span>
+                          </div>
+                          <div class="col-4">
+                            <app-half-circle-spinner
+                            style="position: absolute;display: inline-block;"
+                            [animationDuration]="1000"
+                            [size]="22"
+                            [color]="'#fff'"
+                          ></app-half-circle-spinner>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                    <div class="col-12" [hidden]="isLoading">
+                      <button [disabled]="signupForm.invalid" class="btn btn-primary mt-4">Create account</button>
+                    </div>
+                    
                   </div>
                 </form>
               </div>
