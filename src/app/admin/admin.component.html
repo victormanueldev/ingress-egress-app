@@ -20,11 +20,27 @@
     </section>
     <section class="section">
       <div class="container">
-        <div class="card card-profile shadow mt--300">
-          <div class="px-4">
-
-            <router-outlet></router-outlet>
-
+        <div class="card shadow mt--300">
+          <div class="p-4">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="user-info">
+                  <div class="profile-image">
+                    <img  width="150" height="150" src="./assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                  </div>
+                  <div class="text-center mt-4">
+                    <h3>{{ userData.name }}</h3>
+                    <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Bucharest, Romania</div>
+                    <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Solution Managerr</div>
+                    <div><i class="ni education_hat mr-2"></i>University of Computer Science</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-8 col-sm-12 col-md-8 col-lg-8">
+                <router-outlet></router-outlet>
+              </div>
+            </div>
           </div>
         </div>
       </div>

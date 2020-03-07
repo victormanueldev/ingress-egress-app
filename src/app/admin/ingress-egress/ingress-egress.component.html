@@ -1,0 +1,87 @@
+<div >
+    <h3>Ingress & Egress</h3>
+    <span>Enter the movement to control your finances</span>
+    
+    <form [formGroup]="movementsForm" role="form" class="mt-3" >
+        <div class="form-group mb-3" [ngClass]="{'focused':focus===true}">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-credit-card-alt"></i></span>
+              </div>
+              <input 
+                class="form-control" 
+                placeholder="Movement description" 
+                type="text" 
+                (focus)="focus=true" 
+                (blur)="focus=false"
+                formControlName="description"
+                name="Description"
+              >
+            </div>
+          </div>
+          <div class="form-group mb-3" [ngClass]="{'focused':focus1===true}">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+              </div>
+              <input 
+                class="form-control" 
+                placeholder="Total movement amount" 
+                type="number" 
+                (focus)="focus1=true" 
+                (blur)="focus1=false"
+                formControlName="amount"
+                name="email"
+              >
+            </div>
+          </div>
+          <div class="form-group mb-3" [ngClass]="{'focused':focus2===true}">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-exchange"></i></span>
+              </div>
+                <select                 
+                    (focus)="focus2=true" 
+                    (blur)="focus2=false" 
+                    class="form-control" 
+                    name="type" 
+                    formControlName="type"
+                    id="type-movement"
+                >
+                    <option value="">Choose one option</option>
+                    <option value="Ingress">Ingress</option>
+                    <option value="Egress">Egress</option>
+                </select>
+            </div>
+          </div>
+    </form>
+    <div class="px-3 text-center row justify-content-end">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 px-0" [hidden]="!isLoading">
+          <button [disabled]="true" class="btn btn-primary my-4">
+            <div class="row">
+              <div class="col-8">
+                <span>Saving movement...</span>
+              </div>
+              <div class="col-4">
+                    <app-half-circle-spinner
+                    style="position: absolute;display: inline-block;"
+                    [animationDuration]="1000"
+                    [size]="22"
+                    [color]="'#fff'"
+                ></app-half-circle-spinner>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-6 px-0" [hidden]="isLoading">
+          <button type="reset" class="btn btn-default my-4">
+            Cancel
+          </button>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 col-6 px-0" [hidden]="isLoading">
+            <button type="button" (click)="saveMovement(movementsForm.value)" [disabled]="movementsForm.invalid" class="btn btn-primary my-4">
+              Create
+            </button>
+          </div>
+      </div>
+</div>

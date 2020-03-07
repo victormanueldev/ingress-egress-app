@@ -1,1 +1,82 @@
-<!-- Content Stats -->
+<div class="mb-4">
+  <h3 class="m-0">Finance Stats</h3>
+  <span>Here's the status of your finances</span>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="card py-2 px-3">
+      <div class="card-title row">
+        <div class="col-3">
+          <i class="fa fa-share icon-title text-success"></i>
+        </div>
+        <div class="col-9">
+          <h4 class="m-0">Ingress</h4>
+          <span class="">Money that you recive</span>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="progress-wrapper p-0 text-right">
+          <div class="mb-2">
+            <span style="font-size: 20px;"
+              class="badge badge-pill badge-success">{{ (totalIngress | async) | currency }}</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+              aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+    <div class="card py-2 px-3">
+      <div class="card-title row">
+        <div class="col-3">
+          <i class="fa fa-reply icon-title text-danger"></i>
+        </div>
+        <div class="col-9">
+          <h4 class="m-0">Egress</h4>
+          <span class="">Money that you spent</span>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="progress-wrapper p-0 text-right">
+          <div class="mb-2">
+            <span style="font-size: 20px;"
+              class="badge badge-pill badge-danger">{{ (totalEgress | async) | currency }}</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+              aria-valuemax="100" style="width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+      <div class="card mt-4 py-2 px-3">
+        <div class="row">
+            <div class="col-6">
+                <div class="card-title">
+                    <h4 class="m-0">Current State</h4>
+                    <span>This is your actual finance state</span>
+                </div>
+                <div class="card-body px-0">
+                    <span style="font-size: 30px;"
+                    class="badge badge-pill badge-primary">{{ (totalEgress | async) | currency }}</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <canvas baseChart 
+                        [data]="doughnutChartData" 
+                        [labels]="doughnutChartLabels" 
+                        [colors]="doughnutChartColors"
+                        chartType="doughnut">
+                    </canvas>
+                </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

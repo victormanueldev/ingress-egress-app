@@ -93,3 +93,9 @@
         @include transition($transition-base);
     }
 }
+
+.profile-image {
+    margin: auto;
+    width: 50%;
+    height: auto;
+}

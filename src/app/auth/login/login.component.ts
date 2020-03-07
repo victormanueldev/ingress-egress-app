@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store.dispatch( new ActivateLoadingAction() );
 
     try {
-      const user = await this.authService.login( formData.email, formData.password );
+      await this.authService.login( formData.email, formData.password );
       this.router.navigate(['/admin']);
 
     } catch (error) {

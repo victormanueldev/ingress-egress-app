@@ -7,9 +7,13 @@ import { AngularFireModule }      from '@angular/fire';
 import { AngularFireAuthModule }  from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
+// Charts
+import { ChartsModule }           from 'ng2-charts';
+
+
 
 // Forms
-import { FormsModule }            from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { AppRoutingModule }       from '@app/app-routing.module';
@@ -20,7 +24,6 @@ import { LoginComponent }         from '@app/auth/login/login.component';
 import { SignupComponent }        from '@app/auth/signup/signup.component';
 import { NavbarComponent }        from '@app/shared/navbar/navbar.component';
 import { FooterComponent }        from '@app/shared/footer/footer.component';
-import { StatsComponent }         from '@app/admin/stats/stats.component';
 import { AlertComponent }         from '@app/shared/alert/alert.component';
 
 // Epic Spinner
@@ -32,6 +35,10 @@ import { StoreModule }            from '@ngrx/store';
 import { StoreDevtoolsModule }    from '@ngrx/store-devtools';
 import { environment }            from 'environments/environment';
 import { reducers, metaReducers } from './reducers';
+import { IngressEgressComponent } from './admin/ingress-egress/ingress-egress.component';
+import { StatsComponent } from './admin/stats/stats.component';
+import { DetilsComponent } from './admin/detils/detils.component';
+import { MovementsOrderPipe } from './admin/movements-order.pipe';
 
 
 @NgModule({
@@ -43,14 +50,18 @@ import { reducers, metaReducers } from './reducers';
     SignupComponent,
     NavbarComponent,
     FooterComponent,
+    AlertComponent,
+    IngressEgressComponent,
     StatsComponent,
-    AlertComponent
+    DetilsComponent,
+    MovementsOrderPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -62,7 +73,8 @@ import { reducers, metaReducers } from './reducers';
       }
     }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    HalfCircleSpinnerModule
+    HalfCircleSpinnerModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

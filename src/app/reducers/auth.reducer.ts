@@ -1,4 +1,4 @@
-import { User } from '@app/auth/user.model';
+import { User } from '@app/models/user.model';
 import * as fromAuth from '@app/actions/auth.actions';
 
 
