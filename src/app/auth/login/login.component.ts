@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     try {
       await this.authService.login( formData.email, formData.password );
-      this.router.navigate(['/admin']);
+      this.router.navigate(['/admin/stats']);
 
     } catch (error) {
       this.alertData.cssClass = 'error';

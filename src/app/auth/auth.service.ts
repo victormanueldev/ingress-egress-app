@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map, take } from 'rxjs/operators'
 import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
@@ -62,7 +62,7 @@ export class AuthService {
         this.afs.doc( `${ user.uid }/usuario` ).set( user )
           .then( () => {
             this.store.dispatch( new DeactivateLoadingAction() );
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin/stats']);
           })
         
       })
@@ -83,7 +83,8 @@ export class AuthService {
 
   isAuthenticated(): Observable<boolean> {
     return this.afAuth.authState.pipe(
-      map( user => !!user )
+      map( user => !!user ),
+      take(1)
     );
   }
 

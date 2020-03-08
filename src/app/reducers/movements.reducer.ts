@@ -1,9 +1,16 @@
 import * as fromMovements from '@app/actions/movements.actions';
 import { Movement } from '@app/models/movement.model';
+import { AppState } from '@app/reducers/index';
 
 export interface MovementsState {
     movements: Movement[];
 }
+
+export interface MovementsAppState extends AppState {
+    movements: MovementsState
+}
+
+export const selectMovements = ( state: MovementsAppState ) => state.movements; 
 
 export const initialState: MovementsState = { movements: [] };
 

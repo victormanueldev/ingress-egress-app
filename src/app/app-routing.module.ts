@@ -1,32 +1,20 @@
 import { NgModule }             from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthComponent }        from './auth/auth.component';
-import { authRoutes }           from './auth/auth.routes';
-import { AdminComponent }       from './admin/admin.component';
-import { adminRoutes }          from './admin/admin.routes';
+import { Routes, RouterModule, NoPreloading } from '@angular/router';
 import { AuthGuard }            from './auth/auth.guard';
 
 
 const routes: Routes = [
   { 
     path        : 'auth',
-    component   :  AuthComponent,
-    children    :  authRoutes
+    loadChildren : () => import('@app/auth/auth.module').then(m => m.AuthModule)
   },
   { 
     path        : 'admin',
-    component   : AdminComponent,
-    children    : adminRoutes,
-    canActivate : [AuthGuard]
-  },
-  {
-    path        : '',
-    redirectTo  : 'auth/login',
-    pathMatch   : 'full'
+    loadChildren: () => import('@app/admin/admin.module').then(m => m.AdminModule)
   },
   {
     path        : '**',
-    redirectTo  : '/admin',
+    redirectTo  : '/admin/stats',
     pathMatch   : 'full'
   }
 
@@ -34,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: NoPreloading })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
